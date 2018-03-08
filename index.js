@@ -7,7 +7,12 @@ const serverPort = 8091
 var savedConfig = {}
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-reminders.login('Device Name', 'username', 'password', function(error, response, config){
+AMAZON_USER=$(jq --raw-output ".amazon_login" $CONFIG_PATH)
+AMAZON_PASS=$(jq --raw-output ".amazon_password" $CONFIG_PATH)
+AMAZON_NAME=$(jq --raw-output ".alexa_device_name" $CONFIG_PATH)
+
+
+reminders.login("$AMAZON_NAME", "$AMAZON_USER", "$AMAZON_PASS", function(error, response, config){
   savedConfig = config
   console.log(response)
 })
@@ -22,8 +27,8 @@ app.post('/alexa-reminders', urlencodedParser, function (req, res) {
 app.listen(serverPort, function () {
   ngrok.connect(serverPort, function (err, url) {
     console.log('External endpoint:')
-    console.log('curl -X POST -d "reminder=Ask Alexa team for a proper Reminders API" ' + url + '/alexa-reminders')
+    console.log('curl -X POST -d "reminder=Reminder text" ' + url + '/alexa-reminders')
     console.log('Internal endpoint:')
-    console.log('curl -X POST -d "reminder=Ask Alexa team for a proper Reminders API" ' + 'http://localhost:' + serverPort + '/alexa-reminders')
+    console.log('curl -X POST -d "reminder=Reminder text" ' + 'http://localhost:' + serverPort + '/alexa-reminders')
   })
 })

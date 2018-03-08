@@ -1,5 +1,8 @@
 # alexa-reminders-listener
 
+This is a fork of the Alexa Reminders to be used with Hassio and Home Assistant
+
+
 This is an example of using [https://github.com/noelportugal/alexa-reminders](https://github.com/noelportugal/alexa-reminders) as a listener.
 
 #### Listener
